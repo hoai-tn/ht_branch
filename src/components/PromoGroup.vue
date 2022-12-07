@@ -1,7 +1,7 @@
 <template>
-  <div class="container mx-auto">
+  <section class="container mx-auto">
     <a class="block mt-2 text-2xl text-center" href="#">
-      <b> A warm Welcome From Balamain </b>
+      <h5 class="font-bold inline">A warm Welcome From Balamain </h5>
       <span class="underline">SHOP NEW ARRIVALS </span>
     </a>
     <div class="flex justify-center space-x-10 mt-[100px]">
@@ -18,27 +18,30 @@
           class="mb-4"
           src="../assets/images/CATEGORY-WOMENS.jpg"
           alt="womens"
-      />
-      WOMEN'S
+        />
+        WOMEN'S
       </router-link>
       <router-link class="underline font-bold" to="/"
         ><img
           class="mb-4"
           src="../assets/images/CATEGORY-FOOTWEAR.jpg"
           alt="footwear"
-      />FOOTWEAR</router-link>
+        />FOOTWEAR</router-link
+      >
       <router-link class="underline font-bold" to="/"
         ><img
           class="mb-4"
           src="../assets/images/CATEGORY-ACCESSORIES.jpg"
           alt="accessories"
-      />JEWELRY</router-link>
+        />JEWELRY</router-link
+      >
       <router-link class="underline font-bold" to="/"
         ><img
           class="mb-4"
           src="../assets/images/CATEGORY-HANDBAGS.jpg"
           alt="handbags"
-      />HANDBAGS</router-link>
+        />HANDBAGS</router-link
+      >
     </div>
-  </div>
+  </section>
 </template>
