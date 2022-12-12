@@ -1,3 +1,10 @@
+<script setup lang="ts">
+import ProductItem from '../components/products/ProductItem.vue'
+
+</script>
+
 <template>
-  <section>trendingNow</section>
+  <section>
+    <ProductItem/>
+  </section>
 </template>

@@ -2,6 +2,7 @@
 import PromoGroup from '../components/PromoGroup.vue';
 import PromoDouble from '../components/PromoDouble.vue';
 import ShopRickOwens from '../components/ShopRickOwens.vue';
+import TrendingNow from '../components/TrendingNow.vue';
 import { reactive } from '@vue/reactivity';
 import { v4 as uuidv4 } from 'uuid';
 const state = reactive({
@@ -43,4 +44,6 @@ const state = reactive({
   <PromoDouble :products="state.promoTop" />
   <ShopRickOwens />
   <PromoDouble :products="state.promoBottom" />
+  <img class="mt-5 w-full" src="/src/assets/images/banner-bottom.jpg" />
+  <TrendingNow />
 </template>

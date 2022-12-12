@@ -1,4 +1,4 @@
-<script setup lang="ts">
+  <script setup lang="ts">
 // interface Project
 const { products } = defineProps({
   products: Array,
