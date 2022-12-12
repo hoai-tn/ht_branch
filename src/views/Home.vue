@@ -8,13 +8,13 @@ const state = reactive({
   promoTop: [
     {
       id: uuidv4(),
-      image: 'require(`@/assets/images/MAISON-ONE.jpg`)',
+      image: '/src/assets/images/MAISON-ONE.jpg',
       content: 'Beautiful Textures & Prints from Kwaidan Editions',
       subsTitle: 'SHOP MM6 NOW',
     },
     {
       id: uuidv4(),
-      image: 'require(`@/assets/images/LUUDAN-EDIT.jpg`)',
+      image: '/src/assets/images/LUUDAN-EDIT.jpg',
       content: 'New Looks by Golden Gooseaas',
       subsTitle: 'SHOP THE EDIT',
     },
@@ -22,14 +22,14 @@ const state = reactive({
   promoBottom: [
     {
       id: uuidv4(),
-      image: 'a',
-      content: 'Maison Margiel',
+      image: '/src/assets/images/promo-dou-3.jpg',
+      content: 'Shop Luxe Gift',
       subsTitle: 'SHOP MM6 NOW',
     },
     {
       id: uuidv4(),
-      image: 'b',
-      content: 'Maison Margiel',
+      image: '/src/assets/images/promo-dou-4.jpg',
+      content: 'Maison Boot',
       subsTitle: 'SHOP THE EDIT',
     },
   ],

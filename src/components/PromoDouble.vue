@@ -1,7 +1,9 @@
 <script setup lang="ts">
+// interface Project
 const { products } = defineProps({
   products: Array,
 });
+
 </script>
 <template>
   <section>
@@ -9,11 +11,7 @@ const { products } = defineProps({
       <div class="flex space-x-10">
         <div v-for="product in products" :key="product.id">
           <router-link to="/"
-            ><img
-              class="mb-4"
-              :src="product.image"
-              alt="Mens"
-            />
+            ><img class="mb-4" :src="product.image" alt="Mens" />
             <p class="font-bold my-3 text-sm">
               {{ product.content }}
             </p>
