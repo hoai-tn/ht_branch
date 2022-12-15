@@ -1,14 +1,16 @@
+<script setup lang="ts">
+const { product } = defineProps({
+  product: Object,
+}); // #f5f5f5 #0000000a
+</script>
 <template>
-  <section>
-      <div class="h2">Trending Now</div>
-    <div class="text-center flex-1">
-      <div>
-        <img src="@/assets/images/CATEGORY-FOOTWEAR.jpg" alt="alt-item" />
-      </div>
-      <div class="text-bold">Paul Smile</div>
-      <div>Short sleeve Bloswing with</div>
-      <div>$3900</div>
-      <div>S2</div>
+  <div class="text-center">
+    <div class="bg-[#0000000a] p-1">
+      <img :src="product.image" alt="alt-item" />
     </div>
-  </section>
+    <div class="text-bold">{{ product.name }}</div>
+    <div>{{ product.title }}</div>
+    <div>{{ product.price }}</div>
+    <div>S2</div>
+  </div>
 </template>

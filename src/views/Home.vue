@@ -5,7 +5,7 @@ import ShopRickOwens from '../components/ShopRickOwens.vue';
 import TrendingNow from '../components/TrendingNow.vue';
 import { reactive } from '@vue/reactivity';
 import { v4 as uuidv4 } from 'uuid';
-const state = reactive({
+const { promoTop, promoBottom, trendingProducts } = reactive({
   promoTop: [
     {
       id: uuidv4(),
@@ -34,6 +34,37 @@ const state = reactive({
       subsTitle: 'SHOP THE EDIT',
     },
   ],
+  trendingProducts: [
+    {
+      id: uuidv4(),
+
+      image: '/src/assets/images/trending1.jpg',
+      name: 'Paul Smile',
+      title: 'Short sleeve Bloswing',
+      price: 2900,
+    },
+    {
+      id: uuidv4(),
+      image: '/src/assets/images/trending2.jpg',
+      name: 'Paul Smile',
+      title: 'Short sleeve Bloswing',
+      price: 2900,
+    },
+    {
+      id: uuidv4(),
+      image: '/src/assets/images/trending3.jpg',
+      name: 'Trending 3',
+      title: 'Short sleeve Bloswing',
+      price: 2900,
+    },
+    {
+      id: uuidv4(),
+      image: '/src/assets/images/trending4.jpg',
+      name: 'Trending 4',
+      title: 'Short sleeve Bloswing',
+      price: 2900,
+    },
+  ],
 });
 </script>
 <template>
@@ -41,9 +72,9 @@ const state = reactive({
     <img src="/src/assets/images/banner-top.jpg" />
   </div>
   <PromoGroup />
-  <PromoDouble :products="state.promoTop" />
+  <PromoDouble :products="promoTop" />
   <ShopRickOwens />
-  <PromoDouble :products="state.promoBottom" />
+  <PromoDouble :products="promoBottom" />
   <img class="mt-5 w-full" src="/src/assets/images/banner-bottom.jpg" />
-  <TrendingNow />
+  <TrendingNow :products="trendingProducts" />
 </template>

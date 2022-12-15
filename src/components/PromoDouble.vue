@@ -1,9 +1,18 @@
-  <script setup lang="ts">
+<script setup lang="ts">
 // interface Project
-const { products } = defineProps({
-  products: Array,
-});
+interface Product {
+  id: string;
+  image: string;
+  title: string;
+  subsTitle?: string;
+  content: string;
+  price: number;
+}
 
+interface PromoDoubleProps {
+  products: Array<Product>;
+}
+const { products } = defineProps<PromoDoubleProps>();
 </script>
 <template>
   <section>
@@ -15,20 +24,9 @@ const { products } = defineProps({
             <p class="font-bold my-3 text-sm">
               {{ product.content }}
             </p>
-            <p class="underline font-bold">{{ product.subsTitle }}</p>
+            <p class="underline font-bold">{{ product?.subsTitle }}</p>
           </router-link>
         </div>
-        <!-- <div>
-          <router-link to="/"
-            ><img
-              class="mb-4"
-              src="../assets/images/LUUDAN-EDIT.jpg"
-              alt="womens"
-            />
-            <p class="font-bold my-3 text-sm">New Looks by Golden Goose</p>
-            <p class="underline font-bold">SHOP THE EDIT</p>
-          </router-link>
-        </div> -->
       </div>
     </div>
   </section>
