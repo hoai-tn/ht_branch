@@ -1,8 +1,10 @@
 <script setup lang="ts">
+import { defineComponent } from 'vue';
 import ProductItem from '../components/products/ProductItem.vue';
 const { products } = defineProps({
   products: Array,
 });
+
 </script>
 
 <template>
