@@ -1,7 +1,7 @@
 <template>
   <section class="container mx-auto">
     <a class="block mt-2 text-2xl text-center" href="#">
-      <h5 class="font-bold inline">A warm Welcome From Balamain </h5>
+      <h5 class="font-bold inline">A warm Welcome From Balamain</h5>
       <span class="underline">SHOP NEW ARRIVALS </span>
     </a>
     <div class="flex justify-center space-x-10 mt-[100px]">

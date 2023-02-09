@@ -1,12 +1,9 @@
 <script setup lang="ts">
-import { defineComponent } from 'vue';
 import ProductItem from '../components/products/ProductItem.vue';
-const { products } = defineProps({
-  products: Array,
-});
+import { Product } from '../interfaces';
 
+const { products } = defineProps<{ products: Product[] }>();
 </script>
-
 <template>
   <section>
     <h1 class="text-2xl text-center font-bold mt-[200px] mb-3">Trending Now</h1>

@@ -1,13 +1,8 @@
 <script setup lang="ts">
 // interface Project
-interface Product {
-  id: string;
-  image: string;
-  title: string;
-  subsTitle?: string;
-  content: string;
-  price: number;
-}
+
+import { Product } from "../interfaces";
+
 
 interface PromoDoubleProps {
   products: Array<Product>;
