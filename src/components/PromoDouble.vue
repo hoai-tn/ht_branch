@@ -1,13 +1,12 @@
 <script setup lang="ts">
 // interface Project
-
-import { Product } from "../interfaces";
-
+import { Product } from '../interfaces';
 
 interface PromoDoubleProps {
   products: Array<Product>;
 }
 const { products } = defineProps<PromoDoubleProps>();
+
 </script>
 <template>
   <section>

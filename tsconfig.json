@@ -12,6 +12,9 @@
     "esModuleInterop": true,
     "lib": ["ESNext", "DOM"],
     "skipLibCheck": true,
+    "allowSyntheticDefaultImports": true,
+    "noEmitOnError": false,
+    "noEmit": true,
   },
   "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue", "src/main.ts", "src/main.ts", "src/main.ts"],
   "references": [{

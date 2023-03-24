@@ -13,7 +13,6 @@ import {
   faFacebook,
 } from '@fortawesome/free-brands-svg-icons';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
-
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 library.add(faTwitter, faInstagram, faFacebook, faHeart);
 

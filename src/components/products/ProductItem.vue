@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { Product } from "../../interfaces";
 
 const { product } = defineProps<{product:Product}>();
 </script>

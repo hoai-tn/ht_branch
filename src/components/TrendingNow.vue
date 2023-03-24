@@ -2,7 +2,7 @@
 import ProductItem from '../components/products/ProductItem.vue';
 import { Product } from '../interfaces';
 
-const { products } = defineProps<{ products: Product[] }>();
+const { products } = defineProps<{ products: Array<Product> }>();
 </script>
 <template>
   <section>
