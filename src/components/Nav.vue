@@ -1,11 +1,8 @@
 <script setup lang="ts"></script>
 <template>
-  <section>
-    <div class="bg-black text-white text-right px-4 py-2">
-      FREE Shipping & FREE 365-Day Returns
-    </div>
-    <nav class="text-black px-6 py-4">
-      <div class="flex flex-wrap justify-between items-center mx-auto">
+  <section class="sticky top-0 z-50 bg-white text-black py-4 px-6 h-[50px]">
+    <nav>
+      <div class="flex flex-wrap justify-between mx-auto">
         <router-link to="/" href="">
           <img src="../assets/images/logo.svg" alt="logo" />
         </router-link>
