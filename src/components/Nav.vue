@@ -19,7 +19,7 @@
               <a class="hover:underline" href="">Designers</a>
             </li>
             <li class="px-4">
-              <router-link to="/sale" class="hover:underline" href=""
+              <router-link to="/sale" class="hover:underline" 
                 >Sale</router-link
               >
             </li>
