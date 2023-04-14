@@ -4,19 +4,17 @@
 // import HelloWorld from "./components/HelloWorld.vue";
 import Nav from './components/Nav.vue';
 import Footer from './components/Footer.vue';
-
+import BagBar from './components/BagBar.vue';
 </script>
 
 <template>
-  <div>
-    <div class="bg-black text-white text-right px-4 py-2">
-      FREE Shipping & FREE 365-Day Returns
-    </div>
-    <Nav />
-    <router-view />
-  <Footer></Footer>
-
+  <div class="bg-black text-white text-right px-4 py-2">
+    FREE Shipping & FREE 365-Day Returns
   </div>
+  <Nav />
+  <router-view />
+  <Footer></Footer>
+  <BagBar />
 </template>
 
 <style scoped></style>

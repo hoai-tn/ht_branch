@@ -1,6 +1,10 @@
-<script setup lang="ts"></script>
+<script setup>
+import { useAppStore } from '@/stores/app';
+
+const store = useAppStore();
+</script>
 <template>
-  <section class="sticky top-0 z-50 bg-white text-black py-4 px-6 h-[50px]">
+  <section class="sticky top-0 z-10 bg-white text-black py-4 px-6 h-[50px]">
     <nav>
       <div class="flex flex-wrap justify-between mx-auto">
         <router-link to="/" href="">
@@ -19,9 +23,7 @@
               <a class="hover:underline" href="">Designers</a>
             </li>
             <li class="px-4">
-              <router-link to="/sale" class="hover:underline" 
-                >Sale</router-link
-              >
+              <router-link to="/sale" class="hover:underline">Sale</router-link>
             </li>
           </ul>
         </div>
@@ -36,9 +38,10 @@
           ><a class="px-2" href="">
             <span class="material-symbols-sharp"> favorite </span>
           </a>
-          <a class="px-2" href="">
+
+          <span class="px-2 cursor-pointer" @click="store.onShowBagNav()">
             <span class="material-symbols-sharp"> shopping_cart </span>
-          </a>
+          </span>
         </div>
       </div>
     </nav>
