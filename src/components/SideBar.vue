@@ -12,7 +12,7 @@ const store = useAppStore();
     ></div>
     <div
       :class="[
-        'top-0 left-0 w-[80vw] sm:w-[45vw] bg-white p-4 fixed h-full z-40 ease-in-out duration-300',
+        'fixed top-0 left-0 w-[80vw] sm:w-[45vw] bg-white p-4  h-full z-40 ease-in-out duration-300',
         `${store.isShowSideBar ? 'translate-x-0' : 'translate-x-[-100%]'}`,
       ]"
     >

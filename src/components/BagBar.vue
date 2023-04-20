@@ -16,7 +16,6 @@ watch(
   }
 );
 
-console.log(bagStore.products);
 </script>
 <template>
   <div

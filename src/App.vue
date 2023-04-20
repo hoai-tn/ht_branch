@@ -5,7 +5,8 @@
 import Nav from './components/Nav.vue';
 import Footer from './components/Footer.vue';
 import BagBar from './components/BagBar.vue';
-import SideBar from "./components/SideBar.vue"
+import SideBar from './components/SideBar.vue';
+import SignInModal from './components/SingInModal.vue';
 </script>
 
 <template>
@@ -16,7 +17,8 @@ import SideBar from "./components/SideBar.vue"
   <router-view />
   <Footer></Footer>
   <BagBar />
-  <SideBar/>
+  <SideBar />
+  <SignInModal />
 </template>
 
 <style scoped></style>

@@ -3,6 +3,7 @@ import PromoGroup from '../components/PromoGroup.vue';
 import PromoDouble from '../components/PromoDouble.vue';
 import ShopRickOwens from '../components/ShopRickOwens.vue';
 import TrendingNow from '../components/TrendingNow.vue';
+
 import { reactive } from '@vue/reactivity';
 import { v4 as uuidv4 } from 'uuid';
 const { promoTop, promoBottom, trendingProducts } = reactive({

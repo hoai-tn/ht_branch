@@ -21,9 +21,9 @@ const addToBag = () => {
 };
 </script>
 <template>
-  <div class="flex pt-10">
-    <div class="w-1/2 max-h-[800px]">
-      <img class="h-[730px]" :src="state.product.image" alt="asd" />
+  <div class="text-center md:flex pt-10 p-4">
+    <div class="w-1/2 max-h-[800px] mx-auto md:mx-0">
+      <img class="mx-auto md:h-[730px]" :src="state.product.image" alt="asd" />
     </div>
     <div>
       <h3 class="text-3xl font-bold">{{ state.product.name }}</h3>
@@ -32,10 +32,10 @@ const addToBag = () => {
       <div class="cursor-pointer mb-3">
         <font-awesome-icon icon="fa-solid fa-heart" />
       </div>
-      <form @submit.prevent="addToBag" class="w-[400px]">
+      <form @submit.prevent="addToBag" class="md:w-[400px] mx-auto md:mx-0">
         <select
           id="size"
-          class="w-full border-[3px] border-black p-3"
+          class="w-full border-[3px] border-black md:p-3"
           v-model="state.form.size"
           required
         >

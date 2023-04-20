@@ -2,7 +2,7 @@ import { defineStore } from 'pinia';
 import { products } from '../shares/products-mock';
 
 export const useProductStore = defineStore('products',{
-  state: () => ({
+    state: () => ({
     products: products,
   }),
   actions: {},

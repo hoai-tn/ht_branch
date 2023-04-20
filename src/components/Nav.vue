@@ -1,7 +1,10 @@
 <script setup>
 import { useAppStore } from '@/stores/app';
-
+import { useBagStore } from '@/stores/bag';
+import { computed } from 'vue';
 const store = useAppStore();
+const bagStore = useBagStore();
+const numberOfProducts = computed(() => bagStore.products.length);
 </script>
 <template>
   <section class="sticky top-0 z-10 bg-white text-black py-4 px-6 h-[50px]">
@@ -39,14 +42,22 @@ const store = useAppStore();
           </a>
           <a class="px-2" href="">
             <span class="material-symbols-outlined"> call </span> </a
-          ><a class="px-2" href="">
-            <span class="material-symbols-sharp"> person </span> </a
+          ><span class="px-2 cursor-pointer" @click="store.onShowSignInModal">
+            <span class="material-symbols-sharp"> person </span> </span
           ><a class="px-2" href="">
             <span class="material-symbols-sharp"> favorite </span>
           </a>
 
-          <span class="px-2 cursor-pointer" @click="store.onShowBagNav()">
-            <span class="material-symbols-sharp"> shopping_cart </span>
+          <span
+            class="relative px-2 cursor-pointer"
+            @click="store.onShowBagNav()"
+          >
+            <div class="material-symbols-sharp">shopping_cart</div>
+            <div
+              class="absolute top-[-20px] right-[-7px] bg-black text-white w-[22px] rounded-full text-center font-bold"
+            >
+              {{ numberOfProducts }}
+            </div>
           </span>
         </div>
       </div>

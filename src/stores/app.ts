@@ -5,6 +5,7 @@ export const useAppStore = defineStore({
   state: () => ({
     isShowBagNav: false,
     isShowSideBar: false,
+    isShowSignInModal: false,
   }),
   actions: {
     onShowBagNav() {
@@ -19,6 +20,13 @@ export const useAppStore = defineStore({
     },
     onHideSideBar() {
       this.isShowSideBar = false;
+    },
+    
+    onShowSignInModal() {
+      this.isShowSignInModal = true;
+    },
+    onHideSignInModal() {
+      this.isShowSignInModal = false;
     },
   },
 });
