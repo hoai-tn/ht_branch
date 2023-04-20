@@ -7,7 +7,7 @@ const { products } = defineProps<{ products: Array<Product> }>();
 <template>
   <section>
     <h1 class="text-2xl text-center font-bold mt-[200px] mb-3">Trending Now</h1>
-    <div class="grid grid-cols-4 gap-2">
+    <div class="grid sm:grid-cols-2 md:grid-cols-4 sm:gap-2">
       <ProductItem
         v-for="product in products"
         :key="product.id"

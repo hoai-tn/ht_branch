@@ -13,13 +13,12 @@ import {
   faTwitter,
   faInstagram,
   faFacebook,
-  
 } from '@fortawesome/free-brands-svg-icons';
-import { faHeart, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { faHeart, faXmark, faBars } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 const pinia = createPinia();
 
-library.add(faTwitter, faInstagram, faFacebook, faHeart, faXmark);
+library.add(faTwitter, faInstagram, faFacebook, faHeart, faXmark, faBars);
 
 createApp(App)
   .component('font-awesome-icon', FontAwesomeIcon)

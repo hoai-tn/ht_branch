@@ -3,6 +3,7 @@ import Home from '../views/Home.vue';
 import New from '../views/New.vue';
 import Sale from '../views/Sale.vue';
 import Product from '../views/Product.vue';
+import { useAppStore } from '../stores/app';
 const routes = [
   { path: '/', component: Home },
   { path: '/new', component: New },
@@ -20,4 +21,8 @@ const router = createRouter({
   routes, // short for `routes: routes`
 });
 
+router.beforeEach(() => {
+  const appStore = useAppStore();
+  appStore.onHideSideBar();
+});
 export default router;

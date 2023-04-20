@@ -8,7 +8,10 @@ const store = useAppStore();
     <nav>
       <div class="flex flex-wrap justify-between mx-auto">
         <div class="flex gap-3">
-          <div class="block md:hidden">ex</div>
+          <div class="block md:hidden" @click="store.onShowSideBar">
+            <!-- <font-awesome-icon class="size-17" icon="fa-brands fa-instagram" /> -->
+            <font-awesome-icon class="text-[23px]" :icon="['fas', 'bars']" />
+          </div>
           <router-link to="/" href="">
             <img src="../assets/images/logo.svg" alt="logo" />
           </router-link>

@@ -9,7 +9,7 @@ const { product } = defineProps<{ product: Product }>();
     <router-link :to="`/product/${product.id}`" class="hover:underline">
       <div class="relative p-2">
         <img
-          class="block h-[415px] w-[415px]"
+          class="block h-[415px] w-[415px] mx-auto"
           :src="product.image"
           alt="product-item"
         />

@@ -5,6 +5,7 @@
 import Nav from './components/Nav.vue';
 import Footer from './components/Footer.vue';
 import BagBar from './components/BagBar.vue';
+import SideBar from "./components/SideBar.vue"
 </script>
 
 <template>
@@ -15,6 +16,7 @@ import BagBar from './components/BagBar.vue';
   <router-view />
   <Footer></Footer>
   <BagBar />
+  <SideBar/>
 </template>
 
 <style scoped></style>

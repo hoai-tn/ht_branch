@@ -1,9 +1,10 @@
 import { defineStore } from 'pinia';
 
 export const useAppStore = defineStore({
-  id: 'product',
+  id: 'app',
   state: () => ({
     isShowBagNav: false,
+    isShowSideBar: false,
   }),
   actions: {
     onShowBagNav() {
@@ -11,6 +12,13 @@ export const useAppStore = defineStore({
     },
     onHideBagNav() {
       this.isShowBagNav = false;
+    },
+
+    onShowSideBar() {
+      this.isShowSideBar = true;
+    },
+    onHideSideBar() {
+      this.isShowSideBar = false;
     },
   },
 });
