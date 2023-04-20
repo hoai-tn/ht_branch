@@ -7,10 +7,13 @@ const store = useAppStore();
   <section class="sticky top-0 z-10 bg-white text-black py-4 px-6 h-[50px]">
     <nav>
       <div class="flex flex-wrap justify-between mx-auto">
-        <router-link to="/" href="">
-          <img src="../assets/images/logo.svg" alt="logo" />
-        </router-link>
-        <div>
+        <div class="flex gap-3">
+          <div class="block md:hidden">ex</div>
+          <router-link to="/" href="">
+            <img src="../assets/images/logo.svg" alt="logo" />
+          </router-link>
+        </div>
+        <div class="hidden md:block">
           <ul class="flex">
             <li class="px-4">
               <router-link to="/new" class="hover:underline" href=""

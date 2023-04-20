@@ -9,10 +9,10 @@ const { products } = defineProps<PromoDoubleProps>();
 
 </script>
 <template>
-  <section>
-    <div class="container mx-auto mt-[100px]">
-      <div class="flex space-x-10">
-        <div v-for="product in products" :key="product.id">
+  <section class="sm:container sm:mx-auto mt-[100px]">
+    <div >
+      <div class="sm:flex space-x-10">
+        <div class="w-full" v-for="product in products" :key="product.id">
           <router-link to="/"
             ><img class="mb-4" :src="product.image" alt="Mens" />
             <p class="font-bold my-3 text-sm">
