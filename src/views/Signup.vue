@@ -1,16 +1,28 @@
 <script setup>
 import AuthForm from '@/components/base/AuthForm.vue';
-
 import { reactive, ref } from 'vue';
-const rePassword = ref(null);
-const { form } = reactive({
-  form: { email: '', password: '', rePassword: '' },
-});
-const onSignup = () => {
-  //   rePassword.value.setCustomValidity('does not match password');
-  if (validateRePassword()) console.log({ form });
-};
 
+import { useAuthStore } from '@/stores/auth';
+import router from '../routers';
+const authStore = useAuthStore();
+
+const rePassword = ref(null);
+let { form, message } = reactive({
+  form: { email: '', password: '', rePassword: '', name: '' },
+  message: null,
+});
+const onSignup = async () => {
+  //   rePassword.value.setCustomValidity('does not match password');
+  if (validateRePassword()) {
+    try {
+      await authStore.signUp({ ...form });
+      router.push('/');
+    } catch (error) {
+      message = error;
+      console.log({ message });
+    }
+  }
+};
 const validateRePassword = () => {
   return form.password === form.rePassword;
 };
@@ -19,6 +31,15 @@ const validateRePassword = () => {
   <AuthForm>
     <h3 class="text-3xl">Create account</h3>
     <form class="flex flex-col gap-y-3" v-on:submit.prevent="onSignup">
+      <label class="block" for="email">Name</label>
+      <input
+        id="name"
+        class="w-full"
+        type="text"
+        required
+        v-model="form.name"
+      />
+
       <label class="block" for="email">Email</label>
       <input
         id="email"
@@ -72,5 +93,6 @@ const validateRePassword = () => {
         >
       </div>
     </div>
+    <div class="text-[red]">{{ message }}</div>
   </AuthForm>
 </template>

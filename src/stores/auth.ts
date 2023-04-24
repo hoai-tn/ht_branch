@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia';
+import { signUp } from '../apis/user.js';
 
 export const useAuthStore = defineStore({
   id: 'auth',
@@ -8,7 +9,7 @@ export const useAuthStore = defineStore({
   }),
   getters: {
     isAuthenticated(state) {
-      return !!state.token;
+      return !!state.token || !!localStorage.getItem('profile');
     },
     getToken(state) {
       return state.token;
@@ -18,19 +19,24 @@ export const useAuthStore = defineStore({
     },
   },
   actions: {
-    setToken(token) {
-      this.token = token;
-      // store token in cookie
-      document.cookie = `auth_token=${token};`;
-    },
-    setUser(user) {
-      this.user = user;
+    async signUp(form) {
+      try {
+        const { data } = await signUp(form);
+        localStorage.setItem(
+          'profile',
+          JSON.stringify({ token: data.token, data: data.result })
+        );
+        this.token = data.token;
+        this.user = data.result;
+      } catch (error) {
+        throw error;
+      }
     },
     clearAuth() {
       this.token = null;
       this.user = null;
-      // clear token in cookie
-      document.cookie = 'auth_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC;';
+
+      localStorage.removeItem('profile');
     },
   },
 });
