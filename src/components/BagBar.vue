@@ -1,21 +1,31 @@
 <script setup>
 import { useAppStore } from '@/stores/app';
 import { useBagStore } from '@/stores/bag';
+import { useAuthStore } from '@/stores/auth';
 
 import { watch } from 'vue';
+import router from '../routers';
 
 const store = useAppStore();
 const bagStore = useBagStore();
+const authStore = useAuthStore();
 
 watch(
   () => store.isShowBagNav,
-  (state) => {
+  () => {
     document.getElementsByTagName('body')[0].style.overflow = store.isShowBagNav
       ? 'hidden'
       : 'visible';
   }
 );
-
+const handleProceedToCheckout = () => {
+  if (authStore.isAuthenticated) {
+    router.push('/checkout');
+  } else {
+    store.onHideBagNav();
+    store.onShowSignInModal();
+  }
+};
 </script>
 <template>
   <div
@@ -91,7 +101,7 @@ watch(
           <button
             type="button"
             class="mt-3 inline-flex w-full justify-center rounded-md bg-black px-6 py-4 text-sm font-semibold text-white shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-200 hover:text-black sm:mt-0 sm:w-auto"
-            @click="store.onHideBagNav"
+            @click="handleProceedToCheckout"
           >
             PROCEED TO CHECKOUT
           </button>
