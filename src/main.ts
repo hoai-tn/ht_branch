@@ -7,7 +7,7 @@ import { createPinia } from 'pinia';
 /* import font awesome icon component */
 /* add fontawesome core */
 import { library } from '@fortawesome/fontawesome-svg-core';
-
+import vue3GoogleLogin from 'vue3-google-login'
 /* add some free styles */
 import {
   faTwitter,
@@ -24,4 +24,8 @@ createApp(App)
   .component('font-awesome-icon', FontAwesomeIcon)
   .use(Routers)
   .use(pinia)
+  .use(vue3GoogleLogin, {
+    clientId: '82543228071-r1kcl7ae09oei6bm15ldt7d945acaufu.apps.googleusercontent.com'
+  })
+  
   .mount('#app');

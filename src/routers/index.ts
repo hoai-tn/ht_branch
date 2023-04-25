@@ -8,12 +8,25 @@ import SignUp from '../views/SignUp.vue';
 import Checkout from '../views/Checkout.vue';
 import { useAppStore } from '../stores/app';
 import { useAuthStore } from '../stores/auth';
+
 const routes = [
   { path: '/', component: Home },
   { path: '/new', component: New },
   { path: '/sale', component: Sale },
-  { path: '/sign-in', component: SignIn },
-  { path: '/sign-up', component: SignUp },
+  {
+    path: '/sign-in',
+    component: SignIn,
+    meta: {
+      requiresVisitor: true,
+    },
+  },
+  {
+    path: '/sign-up',
+    component: SignUp,
+    meta: {
+      requiresVisitor: true,
+    },
+  },
   {
     path: '/checkout',
     component: Checkout,
@@ -39,10 +52,26 @@ const router = createRouter({
   routes, // short for `routes: routes`
 });
 
-router.beforeEach(() => {
+router.beforeEach((to, from, next) => {
   const appStore = useAppStore();
-  appStore.onHideSideBar();
-  appStore.onHideBagNav();
-  appStore.onHideSignInModal();
+  appStore.resetStore();
+
+  const isAuthenticated = localStorage.getItem('profile');
+  if (to.matched.some((record) => record.meta.requiresAuth)) {
+    if (to.meta.requiresAuth && !isAuthenticated) {
+      next('/sign-in');
+    } else {
+      next();
+    }
+  }
+  if (to.matched.some((record) => record.meta.requiresVisitor)) {
+    if (!isAuthenticated) {
+      next();
+    } else {
+      next(`/`);
+    }
+  }
+  next();
 });
+
 export default router;

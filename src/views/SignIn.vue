@@ -1,9 +1,21 @@
 <script setup>
 import AuthForm from '@/components/base/AuthForm.vue';
-import { reactive } from 'vue';
+import { reactive, ref } from 'vue';
 const { form } = reactive({ form: { email: '', password: '' } });
-const onSignIn = () => {
-  console.log({ form });
+
+import { useAuthStore } from '@/stores/auth';
+import router from '../routers';
+const authStore = useAuthStore();
+
+const message = ref(null);
+
+const onSignIn = async () => {
+  try {
+    await authStore.auth({ ...form }, true);
+    router.push('/');
+  } catch (error) {
+    message.value = error;
+  }
 };
 </script>
 <template>
@@ -34,5 +46,6 @@ const onSignIn = () => {
         Create your HT account
       </router-link>
     </div>
+    <div v-if="message" class="text-[red]">{{ message }}</div>
   </AuthForm>
 </template>

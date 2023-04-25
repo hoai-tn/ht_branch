@@ -1,9 +1,15 @@
 <script setup>
 import { useAppStore } from '@/stores/app';
 import { useBagStore } from '@/stores/bag';
-import { computed } from 'vue';
+import { useAuthStore } from '@/stores/auth';
+
+import { computed, ref } from 'vue';
+import { storeToRefs } from 'pinia';
 const store = useAppStore();
 const bagStore = useBagStore();
+const authStore = useAuthStore();
+const { isAuthenticated } = storeToRefs(authStore)
+const isShowDropAvatar = ref(false);
 const numberOfProducts = computed(() => bagStore.products.length);
 </script>
 <template>
@@ -42,8 +48,6 @@ const numberOfProducts = computed(() => bagStore.products.length);
           </a>
           <a class="px-2" href="">
             <span class="material-symbols-outlined"> call </span> </a
-          ><span class="px-2 cursor-pointer" @click="store.onShowSignInModal">
-            <span class="material-symbols-sharp"> person </span> </span
           ><a class="px-2" href="">
             <span class="material-symbols-sharp"> favorite </span>
           </a>
@@ -58,6 +62,76 @@ const numberOfProducts = computed(() => bagStore.products.length);
             >
               {{ numberOfProducts }}
             </div>
+          </span>
+          <span class="px-2 cursor-pointer">
+            <div class="inline relative" v-if="isAuthenticated">
+              <button
+                id="dropdownUserAvatarButton"
+                class="mx-3 text-sm bg-gray-800 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
+                type="button"
+                @click="isShowDropAvatar = !isShowDropAvatar"
+              >
+                <span class="sr-only">Open user menu</span>
+                <img
+                  class="w-8 h-8 rounded-full"
+                  :src="authStore.getUser?.picture"
+                  alt="user photo"
+                />
+              </button>
+
+              <!-- Dropdown menu -->
+              <div
+                v-show="isShowDropAvatar"
+                id="dropdownAvatar"
+                class="absolute right-[-20px] z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600"
+              >
+                <div class="px-4 py-3 text-sm text-gray-900 dark:text-white">
+                  <div>{{ authStore.getUser?.name }}</div>
+                  <div class="font-medium truncate">
+                    {{ authStore.getUser?.email }}
+                  </div>
+                </div>
+                <ul
+                  class="py-2 text-sm text-gray-700 dark:text-gray-200"
+                  aria-labelledby="dropdownUserAvatarButton"
+                >
+                  <li>
+                    <a
+                      href="#"
+                      class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                      >Dashboard</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      href="#"
+                      class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                      >Settings</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      href="#"
+                      class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                      >Earnings</a
+                    >
+                  </li>
+                </ul>
+                <div class="py-2" @click="authStore.logout">
+                  <span
+                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                    >Sign out</span
+                  >
+                </div>
+              </div>
+            </div>
+            <span
+              v-else
+              @click="store.onShowSignInModal"
+              class="material-symbols-sharp"
+            >
+              person
+            </span>
           </span>
         </div>
       </div>

@@ -7,19 +7,20 @@ import router from '../routers';
 const authStore = useAuthStore();
 
 const rePassword = ref(null);
-let { form, message } = reactive({
+const message = ref(null);
+
+let { form } = reactive({
   form: { email: '', password: '', rePassword: '', name: '' },
-  message: null,
 });
+
 const onSignup = async () => {
   //   rePassword.value.setCustomValidity('does not match password');
   if (validateRePassword()) {
     try {
-      await authStore.signUp({ ...form });
+      await authStore.auth({ ...form }, false);
       router.push('/');
     } catch (error) {
-      message = error;
-      console.log({ message });
+      message.value = error;
     }
   }
 };
@@ -93,6 +94,6 @@ const validateRePassword = () => {
         >
       </div>
     </div>
-    <div class="text-[red]">{{ message }}</div>
+    <div v-if="message" class="text-[red]">{{ message }}</div>
   </AuthForm>
 </template>

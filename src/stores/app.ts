@@ -21,11 +21,17 @@ export const useAppStore = defineStore({
     onHideSideBar() {
       this.isShowSideBar = false;
     },
-    
+
     onShowSignInModal() {
       this.isShowSignInModal = true;
     },
     onHideSignInModal() {
+      this.isShowSignInModal = false;
+    },
+
+    resetStore() {
+      this.isShowBagNav = false;
+      this.isShowSideBar = false;
       this.isShowSignInModal = false;
     },
   },

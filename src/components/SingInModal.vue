@@ -1,11 +1,18 @@
 <script setup>
 import { useAppStore } from '@/stores/app';
+import { useAuthStore } from '@/stores/auth';
+
 const store = useAppStore();
+const authStore = useAuthStore();
 
 import Modal from './ModalBase.vue';
 
 const handleOnCloseModal = () => {
-  console.log('on close modal');
+  store.onHideSignInModal();
+};
+
+const callback = async (response) => {
+  await authStore.authGoogle(response.access_token);
   store.onHideSignInModal();
 };
 </script>
@@ -24,16 +31,18 @@ const handleOnCloseModal = () => {
         >
           SIGN IN WITH HT
         </router-link>
-        <button
-          class="flex justify-center items-center gap-x-2 w-full p-4 font-bold border-[3px] border-[#003953] rounded hover:bg-[#003953] hover:text-white"
-        >
-          <img
-            width="30"
-            src="https://cdn-icons-png.flaticon.com/512/2504/2504739.png"
-            alt="google"
-          />
-          <span> SIGN IN WITH GOOGLE </span>
-        </button>
+        <GoogleLogin :callback="callback" popup-type="TOKEN">
+          <button
+            class="flex justify-center justify-center items-center gap-x-2 w-full p-4 font-bold border-[3px] border-[#003953] rounded hover:bg-[#003953] hover:text-white"
+          >
+            <img
+              width="30"
+              src="https://cdn-icons-png.flaticon.com/512/2504/2504739.png"
+              alt="google"
+            />
+            <span> SIGN IN WITH GOOGLE </span>
+          </button>
+        </GoogleLogin>
         <button
           class="flex justify-center justify-center items-center gap-x-2 w-full p-4 font-bold border-[3px] border-[#003953] rounded hover:bg-[#003953] hover:text-white"
         >
