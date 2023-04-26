@@ -1,9 +1,18 @@
 import { defineStore } from 'pinia';
 import { products } from '../shares/products-mock';
-
-export const useProductStore = defineStore('products',{
-    state: () => ({
+import { getProducts } from '../apis/product';
+export const useProductStore = defineStore('products', {
+  state: () => ({
     products: products,
   }),
-  actions: {},
+  actions: {
+    async getProducts() {
+      try {
+        const { data } = await getProducts();
+        this.products = data.result;
+      } catch (error) {
+        throw error;
+      }
+    },
+  },
 });

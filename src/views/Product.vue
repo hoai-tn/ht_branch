@@ -2,21 +2,28 @@
 import { useProductStore } from '@/stores/product';
 import { useBagStore } from '@/stores/bag';
 import { useAppStore } from '@/stores/app';
+import { useAuthStore } from '@/stores/auth';
 
 import { onMounted, reactive, ref } from 'vue';
 import { useRoute } from 'vue-router';
-
+import { getProductByID } from '../apis/product';
 const appStore = useAppStore();
+
 const productStore = useProductStore();
 const bagStore = useBagStore();
 const route = useRoute();
+const authStore = useAuthStore();
 const state = reactive({ product: {}, form: { color: '', size: '' } });
-onMounted(() => {
+onMounted(async () => {
   const id = route.params.id || '';
-  state.product = productStore.products.find((e) => e.id == id);
+  try {
+    const { data } = await getProductByID(id);
+    state.product = data.result;
+  } catch (error) {}
 });
 const addToBag = () => {
-  bagStore.addProduct({ ...state.product, ...state.form });
+  const getUserId = authStore.getUser?._id;
+  if (getUserId) bagStore.addProduct({ ...state.product, ...state.form }, getUserId);
   appStore.onShowBagNav();
 };
 </script>

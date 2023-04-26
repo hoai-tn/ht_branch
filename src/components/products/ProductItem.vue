@@ -6,7 +6,7 @@ const { product } = defineProps<{ product: Product }>();
 
 <template>
   <div class="text-center">
-    <router-link :to="`/product/${product.id}`" class="hover:underline">
+    <router-link :to="`/product/${product._id}`" class="hover:underline">
       <div class="relative p-2">
         <img
           class="block h-[415px] w-[415px] mx-auto"

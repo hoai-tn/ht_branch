@@ -3,7 +3,7 @@ import { useAppStore } from '@/stores/app';
 import { useBagStore } from '@/stores/bag';
 import { useAuthStore } from '@/stores/auth';
 
-import { watch } from 'vue';
+import { onMounted, onUpdated, watch } from 'vue';
 import router from '../routers';
 
 const store = useAppStore();
@@ -18,6 +18,17 @@ watch(
       : 'visible';
   }
 );
+
+onMounted(async () => {
+  const getUserId = authStore.getUser?._id;
+  try {
+    if (getUserId) await bagStore.getProducts(getUserId);
+  } catch (error) {
+    console.log(error);
+    console.log('have some error');
+  }
+});
+
 const handleProceedToCheckout = () => {
   if (authStore.isAuthenticated) {
     router.push('/checkout');
