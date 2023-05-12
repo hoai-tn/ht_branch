@@ -25,7 +25,6 @@ onMounted(async () => {
     if (getUserId) await bagStore.getProducts(getUserId);
   } catch (error) {
     console.log(error);
-    console.log('have some error');
   }
 });
 
@@ -85,7 +84,7 @@ const handleProceedToCheckout = () => {
             </div>
             <div v-if="item.color">Color: {{ item.color }}</div>
             <div v-if="item.size">Size: {{ item.size }}</div>
-            <div v-if="item.width">{{ item.wi }}</div>
+            <div v-if="item.width">{{ item.width }}</div>
           </div>
           <div class="flex flex-col justify-between">
             <div class="text-xl font-bold">{{ item.price }}</div>

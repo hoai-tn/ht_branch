@@ -23,7 +23,11 @@ onMounted(async () => {
 });
 const addToBag = () => {
   const getUserId = authStore.getUser?._id;
-  if (getUserId) bagStore.addProduct({ ...state.product, ...state.form }, getUserId);
+  if (getUserId)
+    bagStore.addProduct(
+      { ...state.product, ...state.form, quantity: 1 },
+      getUserId
+    );
   appStore.onShowBagNav();
 };
 </script>

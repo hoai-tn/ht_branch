@@ -1,8 +1,8 @@
 import API from './api';
 
-export const addToCart = async ( userId, productId ) => {
+export const addToCart = async ( userId, product ) => {
   try {
-    const result = await API.post('/cart/add', { userId, productId });
+    const result = await API.post('/cart/add', { userId, product });
     return result;
   } catch (error) {
     throw error.response.data.message;
@@ -14,6 +14,7 @@ export const getCart = async (userId ) => {
     const result = await API.get(`/cart/${userId}`);
     return result;
   } catch (error) {
+    console.log(error);
     throw error.response.data.message;
   }
 };

@@ -14,6 +14,10 @@ export const products = [
     name: 'Paul Smile',
     title: 'Short sleeve Bloswing',
     price: 2900,
+    salePrice: 2100,
+    color: ['red', 'blue'],
+    size: [20, 21, 22],
+    type: 'Jacket',
     detail: `Lanvin Men's Footwear Size Chart Lanvin™ Wrap Concerto Chain Bag detachable chain link shoulder strap. Magnetic closure. Interior zipper pocket. Two interior slip pockets. Twelve credit card slots. Materials: Main: leather; Lining: leather and textile. Dust bag included. Made in Italy.`,
   },
   {
