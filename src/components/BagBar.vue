@@ -3,13 +3,15 @@ import { useAppStore } from '@/stores/app';
 import { useBagStore } from '@/stores/bag';
 import { useAuthStore } from '@/stores/auth';
 
-import { onMounted, onUpdated, watch } from 'vue';
+import { onBeforeMount, onMounted, onUpdated, ref, watch } from 'vue';
 import router from '../routers';
+import { storeToRefs } from 'pinia';
 
 const store = useAppStore();
 const bagStore = useBagStore();
 const authStore = useAuthStore();
 
+const quantizes = ref({});
 watch(
   () => store.isShowBagNav,
   () => {
@@ -19,10 +21,33 @@ watch(
   }
 );
 
-onMounted(async () => {
+watch(
+  quantizes,
+  (newValue) => {
+    bagStore.products.forEach(async (product) => {
+      if (product.quantity !== newValue[product._id]) {
+        const getUserId = authStore.getUser?._id;
+        await bagStore.removeProduct(
+          getUserId,
+          product._id,
+          newValue[product._id]
+        );
+        bagStore.products.forEach((e) => {
+          quantizes.value[e._id] = e.quantity;
+        });
+      }
+    });
+  },
+  { deep: true }
+);
+
+onBeforeMount(async () => {
   const getUserId = authStore.getUser?._id;
   try {
     if (getUserId) await bagStore.getProducts(getUserId);
+    bagStore.products.forEach((e) => {
+      quantizes.value[e._id] = e.quantity;
+    });
   } catch (error) {
     console.log(error);
   }
@@ -87,9 +112,23 @@ const handleProceedToCheckout = () => {
             <div v-if="item.width">{{ item.width }}</div>
           </div>
           <div class="flex flex-col justify-between">
-            <div class="text-xl font-bold">{{ item.price }}</div>
+            <div class="text-xl font-bold">${{ item.price }}</div>
+            <div>
+              <select
+                id="size"
+                class="w-full border-[3px] border-black md:p-3"
+                v-model="quantizes[item._id]"
+              >
+                <option value="0">Remove</option>
+                <option v-for="num in item.quantity" :key="num" :value="num">
+                  {{ num }}
+                </option>
+              </select>
+            </div>
             <button
-              @click="bagStore.removeProduct(item.id)"
+              @click="
+                bagStore.removeProduct(authStore.getUser?._id, item._id, 0)
+              "
               class="font-bold underline mt-3"
             >
               REMOVE

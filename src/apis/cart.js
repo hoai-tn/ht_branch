@@ -19,9 +19,9 @@ export const getCart = async (userId ) => {
   }
 };
 
-export const removeCart = async ({ userId, productId }) => {
+export const removeCart = async ({ userId, productId, quantity }) => {
   try {
-    const result = await API.post('/cart/remove', { userId, productId });
+    const result = await API.post('/cart/remove', { userId, productId, quantity });
     return result;
   } catch (error) {
     throw error.response.data.message;
