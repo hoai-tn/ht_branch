@@ -6,6 +6,16 @@ export const useBagStore = defineStore('bag', {
   state: () => ({
     products: [] as Product[],
   }),
+  getters: {
+    quantizes: (state) => {
+      const newQuantity = {};
+      state.products.forEach((e) => {
+        newQuantity[e._id] = e.quantity;
+      });
+
+      return newQuantity;
+    },
+  },
   actions: {
     async getProducts(userId: string) {
       try {
@@ -19,14 +29,19 @@ export const useBagStore = defineStore('bag', {
       try {
         const { data } = await addToCart(userId, product);
         console.log({ data });
+
+        this.products = data.products;
       } catch (error) {
         throw error;
       }
-      this.products.push(product);
     },
     async removeProduct(userId, productId, quantity) {
-      const { data } = await removeCart({ userId, productId, quantity });
-      this.products = data.products;
+      try {
+        const { data } = await removeCart({ userId, productId, quantity });
+        this.products = data.products;
+      } catch (error) {
+        throw error;
+      }
     },
     clearBag() {
       this.products = [];

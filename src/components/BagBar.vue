@@ -3,7 +3,7 @@ import { useAppStore } from '@/stores/app';
 import { useBagStore } from '@/stores/bag';
 import { useAuthStore } from '@/stores/auth';
 
-import { onBeforeMount, onMounted, onUpdated, ref, watch } from 'vue';
+import { computed, onBeforeMount, onMounted, onUpdated, ref, watch } from 'vue';
 import router from '../routers';
 import { storeToRefs } from 'pinia';
 
@@ -12,12 +12,27 @@ const bagStore = useBagStore();
 const authStore = useAuthStore();
 
 const quantizes = ref({});
+
+const totalPrice = computed(() => {
+  return bagStore.products
+    .map((e) => e.price * e.quantity)
+    .reduce((a, b) => a + b, 0);
+});
 watch(
   () => store.isShowBagNav,
   () => {
     document.getElementsByTagName('body')[0].style.overflow = store.isShowBagNav
       ? 'hidden'
       : 'visible';
+  }
+);
+
+watch(
+  () => bagStore.products,
+  (newProducts) => {
+    newProducts.forEach((e) => {
+      quantizes.value[e._id] = e.quantity;
+    });
   }
 );
 
@@ -32,9 +47,6 @@ watch(
           product._id,
           newValue[product._id]
         );
-        bagStore.products.forEach((e) => {
-          quantizes.value[e._id] = e.quantity;
-        });
       }
     });
   },
@@ -45,9 +57,6 @@ onBeforeMount(async () => {
   const getUserId = authStore.getUser?._id;
   try {
     if (getUserId) await bagStore.getProducts(getUserId);
-    bagStore.products.forEach((e) => {
-      quantizes.value[e._id] = e.quantity;
-    });
   } catch (error) {
     console.log(error);
   }
@@ -138,7 +147,9 @@ const handleProceedToCheckout = () => {
       </div>
       <!-- bottom -->
       <div class="bg-[#e6e6e6] px-4 py-5">
-        <div class="font-bold text-right">Bag Subtotal (3 item) $2,375.00</div>
+        <div class="font-bold text-right">
+          Bag Subtotal (3 item) ${{ totalPrice }}
+        </div>
         <div class="w-full sm:flex justify-between">
           <button
             type="button"
