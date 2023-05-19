@@ -1,3 +1,3 @@
 <template>
-    <div>check out page</div>
+  <div>check out page</div>
 </template>

@@ -13,11 +13,6 @@ const authStore = useAuthStore();
 
 const quantizes = ref({});
 
-const totalPrice = computed(() => {
-  return bagStore.products
-    .map((e) => e.price * e.quantity)
-    .reduce((a, b) => a + b, 0);
-});
 watch(
   () => store.isShowBagNav,
   () => {
@@ -70,6 +65,10 @@ const handleProceedToCheckout = () => {
     store.onShowSignInModal();
   }
 };
+
+const removeProduct = (id) => {
+  bagStore.removeProduct(authStore.getUser?._id, id, 0);
+};
 </script>
 <template>
   <div
@@ -102,7 +101,7 @@ const handleProceedToCheckout = () => {
         <div
           v-for="(item, index) in bagStore.products"
           :key="index"
-          class="flex p-5 gap-x-10"
+          class="flex p-5 justify-between"
         >
           <div class="relative">
             <img :src="item.image" alt="" width="120" />
@@ -110,7 +109,7 @@ const handleProceedToCheckout = () => {
               class="absolute top-0 left-0 bg-[#0000000a] w-full h-full"
             ></div>
           </div>
-          <div>
+          <div class="w-1/3">
             <div>{{ item.name }}</div>
 
             <div class="font-bold">
@@ -135,9 +134,7 @@ const handleProceedToCheckout = () => {
               </select>
             </div>
             <button
-              @click="
-                bagStore.removeProduct(authStore.getUser?._id, item._id, 0)
-              "
+              @click="removeProduct(item._id)"
               class="font-bold underline mt-3"
             >
               REMOVE
@@ -148,15 +145,19 @@ const handleProceedToCheckout = () => {
       <!-- bottom -->
       <div class="bg-[#e6e6e6] px-4 py-5">
         <div class="font-bold text-right">
-          Bag Subtotal (3 item) ${{ totalPrice }}
+          Bag Subtotal ({{ bagStore.totalQuantity }} item) ${{
+            bagStore.totalPrice
+          }}
         </div>
         <div class="w-full sm:flex justify-between">
-          <button
-            type="button"
-            class="inline-flex w-full justify-center rounded-md bg-black px-6 py-4 text-sm font-semibold text-white shadow-sm hover:bg-gray-200 hover:text-black sm:ml-3 sm:w-auto"
-          >
-            VIEW BAG
-          </button>
+          <router-link to="/bag">
+            <button
+              type="button"
+              class="inline-flex w-full justify-center rounded-md bg-black px-6 py-4 text-sm font-semibold text-white shadow-sm hover:bg-gray-200 hover:text-black sm:ml-3 sm:w-auto"
+            >
+              VIEW BAG
+            </button>
+          </router-link>
 
           <button
             type="button"

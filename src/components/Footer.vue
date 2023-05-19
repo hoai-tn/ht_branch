@@ -1,5 +1,5 @@
 <template>
-  <footer class=" w-full bg-[#e6e6e6] grid grid-cols-3 gap-5 mt-10 py-[50px] px-[30px]">
+  <footer class=" w-full bg-[#e6e6e6] grid grid-cols-3 gap-5 mt-10 py-[50px] px-[30px] absolute left-0 bottom-0 h-[300px]">
     <div class="grid gap-y-3">
       <div>Contact</div>
       <div>FAQs</div>

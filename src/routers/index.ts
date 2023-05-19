@@ -6,6 +6,7 @@ import Product from '../views/Product.vue';
 import SignIn from '../views/SignIn.vue';
 import SignUp from '../views/SignUp.vue';
 import Checkout from '../views/Checkout.vue';
+import Bag from '../views/Bag.vue'
 import { useAppStore } from '../stores/app';
 import { useAuthStore } from '../stores/auth';
 
@@ -26,6 +27,10 @@ const routes = [
     meta: {
       requiresVisitor: true,
     },
+  },
+  {
+    path: '/bag',
+    component: Bag,
   },
   {
     path: '/checkout',

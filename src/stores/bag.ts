@@ -7,13 +7,13 @@ export const useBagStore = defineStore('bag', {
     products: [] as Product[],
   }),
   getters: {
-    quantizes: (state) => {
-      const newQuantity = {};
-      state.products.forEach((e) => {
-        newQuantity[e._id] = e.quantity;
-      });
-
-      return newQuantity;
+    totalPrice: (state) => {
+      return state.products
+        .map((e) => e.price * e.quantity)
+        .reduce((a, b) => a + b, 0);
+    },
+    totalQuantity: (state) => {
+      return state.products.map((e) => e.quantity).reduce((a, b) => a + b, 0);
     },
   },
   actions: {

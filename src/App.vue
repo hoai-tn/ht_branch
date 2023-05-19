@@ -14,7 +14,9 @@ import SignInModal from './components/SingInModal.vue';
     FREE Shipping & FREE 365-Day Returns
   </div>
   <Nav />
-  <router-view />
+  <div class="mb-[400px]">
+    <router-view />
+  </div>
   <Footer></Footer>
   <BagBar />
   <SideBar />
