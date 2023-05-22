@@ -2,7 +2,7 @@
 import { useBagStore } from '@/stores/bag';
 import { useAuthStore } from '@/stores/auth';
 import { computed, onBeforeMount, ref, watch } from 'vue';
-
+import BagItem from "../components/products/BagItem.vue"
 const bagStore = useBagStore();
 const authStore = useAuthStore();
 
@@ -60,48 +60,11 @@ const removeProduct = (id) => {
           <div>Price/Quantity</div>
         </div>
         <div class="border-l border-r border-b border-gray-300">
-          <div
-            v-for="(product, index) in bagStore.products"
-            :key="index"
-            class="flex justify-between p-3 pr-[100px]"
-          >
-            <div class="flex">
-              <router-link :to="`/product/${product._id}`">
-                <img :src="product.image" alt="alt" width="135" />
-              </router-link>
-              <div class="ml-5">
-                <div class="font-bold">{{ product.name }}</div>
-                <div v-if="product.color">Color: {{ product.color }}</div>
-                <div v-if="product.size">Size: {{ product.size }}</div>
-                <div v-if="product.width">{{ product.width }}</div>
-              </div>
-            </div>
-            <div>
-              <div class="text-xl">${{ product.price }}</div>
-              <div>
-                <select
-                  id="size"
-                  class="w-full border-[3px] border-gray-300 md:p-3"
-                  v-model="quantizes[product._id]"
-                >
-                  <option value="0">Remove</option>
-                  <option
-                    v-for="num in product.quantity"
-                    :key="num"
-                    :value="num"
-                  >
-                    {{ num }}
-                  </option>
-                </select>
-              </div>
-              <div
-                class="underline font-bold mt-1 text-xl cursor-pointer"
-                @click="removeProduct(product._id)"
-              >
-                Remove
-              </div>
-            </div>
-          </div>
+          <BagItem
+            :products="bagStore.products"
+            :quantizes="quantizes"
+            @on-remove="(id) => removeProduct(id)"
+          />
         </div>
       </div>
       <div class="w-1/3 p-2 border border-gray-300 h-[200px]">

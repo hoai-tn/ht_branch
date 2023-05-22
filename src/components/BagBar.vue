@@ -6,6 +6,7 @@ import { useAuthStore } from '@/stores/auth';
 import { computed, onBeforeMount, onMounted, onUpdated, ref, watch } from 'vue';
 import router from '../routers';
 import { storeToRefs } from 'pinia';
+import BagItem from "../components/products/BagItem.vue"
 
 const store = useAppStore();
 const bagStore = useBagStore();
@@ -98,49 +99,11 @@ const removeProduct = (id) => {
       </div>
       <div class="relative h-[82%] overflow-auto">
         <!-- product item -->
-        <div
-          v-for="(item, index) in bagStore.products"
-          :key="index"
-          class="flex p-5 justify-between"
-        >
-          <div class="relative">
-            <img :src="item.image" alt="" width="120" />
-            <div
-              class="absolute top-0 left-0 bg-[#0000000a] w-full h-full"
-            ></div>
-          </div>
-          <div class="w-1/3">
-            <div>{{ item.name }}</div>
-
-            <div class="font-bold">
-              <a href="#">Glove Slingback </a>
-            </div>
-            <div v-if="item.color">Color: {{ item.color }}</div>
-            <div v-if="item.size">Size: {{ item.size }}</div>
-            <div v-if="item.width">{{ item.width }}</div>
-          </div>
-          <div class="flex flex-col justify-between">
-            <div class="text-xl font-bold">${{ item.price }}</div>
-            <div>
-              <select
-                id="size"
-                class="w-full border-[3px] border-black md:p-3"
-                v-model="quantizes[item._id]"
-              >
-                <option value="0">Remove</option>
-                <option v-for="num in item.quantity" :key="num" :value="num">
-                  {{ num }}
-                </option>
-              </select>
-            </div>
-            <button
-              @click="removeProduct(item._id)"
-              class="font-bold underline mt-3"
-            >
-              REMOVE
-            </button>
-          </div>
-        </div>
+        <BagItem
+            :products="bagStore.products"
+            :quantizes="quantizes"
+            @on-remove="(id) => removeProduct(id)"
+          />
       </div>
       <!-- bottom -->
       <div class="bg-[#e6e6e6] px-4 py-5">
