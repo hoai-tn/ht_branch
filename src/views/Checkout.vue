@@ -7,7 +7,21 @@ const bagStore = useBagStore();
 const authStore = useAuthStore();
 const quantizes = ref({});
 
-let state = reactive({ form: {}, paymentMethod: null, promoCode: '' });
+let state = reactive({
+  form: {},
+  paymentMethod: null,
+  promoCode: '',
+  selectAddressIndex: 0,
+  activeAddressIndex: 0,
+  isChangeAddress: false,
+});
+
+const estimatedTax = computed(() => (bagStore.totalPrice * 0.01).toFixed(2));
+
+const orderTotal = computed(
+  () => Number(estimatedTax.value) + bagStore.totalPrice
+);
+
 watch(
   () => bagStore.products,
   (newProducts) => {
@@ -33,14 +47,13 @@ watch(
   { deep: true }
 );
 
-const numberOfItems = computed(() =>
-  bagStore.products.map((e) => e.quantity).reduce((a, b) => a + b, 0)
-);
-
 onBeforeMount(async () => {
   const getUserId = authStore.getUser?._id;
   try {
-    if (getUserId) await bagStore.getProducts(getUserId);
+    if (getUserId) {
+      await bagStore.getProducts(getUserId);
+      await authStore.getShippingAddress(getUserId);
+    }
   } catch (error) {
     console.log(error);
   }
@@ -49,15 +62,21 @@ onBeforeMount(async () => {
 const removeProduct = (id) => {
   bagStore.removeProduct(authStore.getUser?._id, id, 0);
 };
+const onSubmitUserInfo = () => {
+  console.log(state.form);
+};
+const handleShipHere = (index) => {
+  state.activeAddressIndex = index;
+  state.isChangeAddress = false;
+};
 </script>
-
 <template>
   <div class="container mx-auto flex gap-x-2">
     <div class="w-2/3">
       <div class="text-2xl">1. Shipping Address</div>
-      <div class="border p-4">
+      <div v-if="!authStore.addressInfo.length" class="border p-4">
         <div class="text-xl border-b pb-2">Add a now shipping address</div>
-        <form class="pt-2">
+        <form class="pt-2" @submit.prevent="onSubmitUserInfo">
           <div>
             <label for="">Country*</label>
             <select
@@ -65,9 +84,8 @@ const removeProduct = (id) => {
               class="w-full border border-gray-300 md:p-2"
               v-model="state.form.country"
             >
-              <option value="0">Remove</option>
-              <option value="0">Remove</option>
-              <option value="0">Remove</option>
+              <option value="vn">Viet Nam</option>
+              <option value="us">United States</option>
             </select>
           </div>
           <div>
@@ -132,6 +150,68 @@ const removeProduct = (id) => {
           </button>
         </form>
       </div>
+      <div
+        v-else
+        v-for="(info, index) in authStore.addressInfo"
+        :key="index"
+        @click="state.selectAddressIndex = index"
+      >
+        <div
+          v-if="state.activeAddressIndex === index || state.isChangeAddress"
+          class="flex justify-between border p-4 mt-3 h-[165px]"
+          :class="{
+            'border-[#6a6a8d]':
+              state.selectAddressIndex === index && state.isChangeAddress,
+          }"
+        >
+          <div>
+            <h4 class="font-bold">{{ info.fullName }}</h4>
+            <div>{{ info.address }}</div>
+            <div>
+              <span>{{ info.state }}, {{ info.city }} {{ info.zip }}</span>
+            </div>
+            <div>{{ info.phoneNumber }}</div>
+          </div>
+          <div>
+            <button
+              v-if="!state.isChangeAddress"
+              @click="state.isChangeAddress = true"
+              class="mt-3 rounded-md border border-black px-6 py-4 text-sm font-semibold text-black shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-700 hover:text-white"
+            >
+              CHANGE SHIPPING ADDRESS
+            </button>
+            <div
+              v-if="state.isChangeAddress && state.selectAddressIndex === index"
+            >
+              <button
+                type="submit"
+                class="block max-w-[200px] w-[170px] mt-3 rounded-md border border-black px-6 py-4 text-sm font-semibold text-black shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-700 hover:text-white"
+              >
+                EDIT ADDRESS
+              </button>
+              <button
+                @click="handleShipHere(index)"
+                class="max-w-[200px] w-[170px] mt-3 rounded-md bg-black px-6 py-4 text-sm font-semibold text-white shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-700 hover:text-white"
+              >
+                SHIP HERE
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="text-right" v-if="state.isChangeAddress">
+        <button
+          @click="state.isChangeAddress = false"
+          class="mr-3 w-[170px] mt-3 rounded-md border border-black px-4 py-3 text-sm font-semibold text-black shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-700 hover:text-white"
+        >
+          CANCEL
+        </button>
+        <button
+          class="mt-3 rounded-md border border-black px-4 py-3 text-sm font-semibold text-black shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-700 hover:text-white"
+        >
+          ADD NEW ADDRESS
+        </button>
+      </div>
       <div class="text-2xl">2. Payment Method</div>
       <div>
         <div class="flex items-center gap-x-4 my-6">
@@ -191,7 +271,7 @@ const removeProduct = (id) => {
         </div>
         <div class="w-1/2 p-4">
           <p class="text-xl font-bold">Estimated Delivery</p>
-          <div class="flex gap-x-3 bg-gray-200 mt-2 p-2">
+          <div class="flex items-center gap-x-3 bg-gray-200 mt-2 p-2">
             <div>
               <img
                 src="https://p7.hiclipart.com/preview/702/495/649/doorstep-delivery-computer-icons-clip-art-others.jpg"
@@ -209,7 +289,7 @@ const removeProduct = (id) => {
           </div>
         </div>
       </div>
-      <h4 class="text-xl font-bold">Order total: $1,255.28</h4>
+      <h4 class="text-xl font-bold">Order total: ${{ bagStore.totalPrice }}</h4>
       <small
         >By placing your order, you agree to zappos.com’s privacy notice and
         conditions of use. *Important information about sales tax you may owe in
@@ -228,10 +308,12 @@ const removeProduct = (id) => {
 
     <div class="w-1/3">
       <div class="bg-gray-100 border border-gray-300 p-4 rounded">
-        <div class="text-xl">Order Summary (8 Items)</div>
+        <div class="text-xl">
+          Order Summary ({{ bagStore.totalQuantity }} Items)
+        </div>
         <div class="flex justify-between py-2">
           <div class="font-bold">Subtotal:</div>
-          <div class="font-bold">$10000</div>
+          <div class="font-bold">${{ bagStore.totalPrice }}</div>
         </div>
         <div class="flex justify-between py-2">
           <div>Shipping:</div>
@@ -239,15 +321,15 @@ const removeProduct = (id) => {
         </div>
         <div class="flex justify-between py-2 border-t border-gray-300">
           <div>Total before tax:</div>
-          <div>$10000</div>
+          <div>${{ bagStore.totalPrice }}</div>
         </div>
         <div class="flex justify-between py-2">
           <div>Estimated tax to be collected:*</div>
-          <div>$95.68</div>
+          <div>${{ estimatedTax }}</div>
         </div>
         <div class="flex justify-between py-2 border-t border-gray-300">
           <div class="text-lg font-bold">Order Total:</div>
-          <div class="text-lg font-bold">$1,255.28</div>
+          <div class="text-lg font-bold">${{ orderTotal }}</div>
         </div>
       </div>
       <div class="mt-2 bg-gray-100 border border-gray-300 p-4 rounded">

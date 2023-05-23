@@ -1,5 +1,12 @@
 import { defineStore } from 'pinia';
-import { signUp, signIn, getUserFromGoogle } from '../apis/user.js';
+import {
+  signUp,
+  signIn,
+  getUserFromGoogle,
+  authGoogle,
+  createShippingAddress,
+  getShippingAddress,
+} from '../apis/user.js';
 import { useBagStore } from './bag.js';
 
 export const useAuthStore = defineStore({
@@ -10,6 +17,7 @@ export const useAuthStore = defineStore({
     return {
       token: getSession?.token,
       user: getSession?.data,
+      addressInfo:[] 
     };
   },
   getters: {
@@ -28,30 +36,27 @@ export const useAuthStore = defineStore({
       try {
         const bagStore = useBagStore();
 
-        const { data } = await getUserFromGoogle(token);
+        const userFromGoogle = await getUserFromGoogle(token);
         const user = {
-          _id: data.sub,
-          name: data.name,
-          email: data.email,
-          picture: data.picture,
+          id: userFromGoogle.data.sub,
+          name: userFromGoogle.data.name,
+          email: userFromGoogle.data.email,
+          picture: userFromGoogle.data.picture,
         };
-
+        const { data } = await authGoogle({ ...user });
         localStorage.setItem(
           'profile',
-          JSON.stringify({ token: token, data: user })
+          JSON.stringify({ token: data.token, data: data.result })
         );
 
         this.token = token;
-        this.user = user;
-
-        await bagStore.getProducts(user._id);
+        this.user = data.result;
       } catch (error) {
         console.log(error);
       }
     },
     async auth(form: object, isSignIn: boolean) {
       try {
-
         const { data } = await (isSignIn ? signIn(form) : signUp(form));
         localStorage.setItem(
           'profile',
@@ -62,7 +67,17 @@ export const useAuthStore = defineStore({
 
         const bagStore = useBagStore();
         await bagStore.getProducts(data.result._id);
-
+      } catch (error) {
+        throw error;
+      }
+    },
+    async createShippingAddress(forn: Object) {
+      
+    },
+    async getShippingAddress(id: string) {
+      try {
+        const { data } = await getShippingAddress(id);
+        this.addressInfo = data.result;
       } catch (error) {
         throw error;
       }

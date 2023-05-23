@@ -8,11 +8,11 @@ const { products, quantizes } = defineProps({
   <div
     v-for="(product, index) in products"
     :key="index"
-    class="flex justify-between p-3 pr-[100px] gap-2"
+    class="flex justify-between p-3 gap-2"
   >
     <div class="flex">
       <router-link :to="`/product/${product._id}`">
-        <img :src="product.image" alt="alt" width="135" />
+        <img :src="product.image" alt="alt" width="205" />
       </router-link>
       <div class="px-3">
         <div class="font-bold">{{ product.name }}</div>
