@@ -6,7 +6,7 @@ import BagItem from '../components/products/BagItem.vue';
 const bagStore = useBagStore();
 const authStore = useAuthStore();
 const quantizes = ref({});
-
+const paypal = ref(null)
 let state = reactive({
   form: {},
   paymentMethod: null,
@@ -54,6 +54,29 @@ onBeforeMount(async () => {
       await bagStore.getProducts(getUserId);
       await authStore.getShippingAddress(getUserId);
     }
+
+    const script = document.createElement('script');
+    script.src =
+    "https://www.paypal.com/sdk/js?client-id=AawPiRz_aVarB-wDJSms9b0AuAtLexUi8-YfMCf1yrO9L90eKQYgi6h0ohOMc5mBPhSNounhCio9C5A3";
+    script.addEventListener('load', () => {
+      window.paypal
+        .Buttons({
+          createOrder: (data, actions) => {
+            return actions.order.create({
+              purchase_units: [
+                {
+                  amount: {
+                    currency_code: 'USD',
+                    value: orderTotal.value,
+                  },
+                },
+              ],
+            });
+          },
+        })
+        .render(paypal.value);
+    });
+    document.body.appendChild(script);
   } catch (error) {
     console.log(error);
   }
@@ -295,7 +318,7 @@ const handleShipHere = (index) => {
         conditions of use. *Important information about sales tax you may owe in
         your state.</small
       >
-      <div>
+      <div v-if="!authStore.addressInfo.length">
         <button
           type="button"
           class="w-full mt-3 rounded-md bg-black px-6 py-4 text-sm font-semibold text-white shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-700 hover:text-white sm:mt-0"
@@ -303,6 +326,7 @@ const handleShipHere = (index) => {
           Place your order
         </button>
       </div>
+      <div v-else class="mx-auto mt-2 text-center" ref="paypal"></div>
     </div>
     <!-- 3 Item Review and Shipping -->
 
@@ -353,3 +377,9 @@ const handleShipHere = (index) => {
     </div>
   </div>
 </template>
+<style>
+.paypal-button {
+  width: 100%;
+  background: red;
+}
+</style>
