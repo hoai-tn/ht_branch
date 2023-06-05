@@ -1,10 +1,10 @@
 <script setup>
+import router from '../routers';
 import AuthForm from '@/components/base/AuthForm.vue';
+import { useAuthStore } from '@/stores/auth';
 import { reactive, ref } from 'vue';
 const { form } = reactive({ form: { email: '', password: '' } });
 
-import { useAuthStore } from '@/stores/auth';
-import router from '../routers';
 const authStore = useAuthStore();
 
 const message = ref(null);

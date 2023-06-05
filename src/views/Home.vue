@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup>
 import PromoGroup from '../components/PromoGroup.vue';
 import PromoDouble from '../components/PromoDouble.vue';
 import ShopRickOwens from '../components/ShopRickOwens.vue';

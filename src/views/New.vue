@@ -1,7 +1,7 @@
-<script setup lang="ts">
-import ProductItem from '../components/products/ProductItem.vue';
-import { useProductStore } from '@/stores/product';
+<script setup>
+import { useProductStore } from '../stores/product';
 import { onMounted } from 'vue';
+import ProductItem from '../components/products/ProductItem.vue';
 const store = useProductStore();
 
 onMounted(async () => {

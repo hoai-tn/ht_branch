@@ -1,11 +1,11 @@
 <script setup>
 import { useAppStore } from '@/stores/app';
 import { useAuthStore } from '@/stores/auth';
+import Modal from './ModalBase.vue';
 
 const store = useAppStore();
 const authStore = useAuthStore();
 
-import Modal from './ModalBase.vue';
 
 const handleOnCloseModal = () => {
   store.onHideSignInModal();

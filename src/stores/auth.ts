@@ -55,7 +55,7 @@ export const useAuthStore = defineStore({
         console.log(error);
       }
     },
-    async auth(form: object, isSignIn: boolean) {
+    async auth(form: any, isSignIn: boolean) {
       try {
         const { data } = await (isSignIn ? signIn(form) : signUp(form));
         localStorage.setItem(

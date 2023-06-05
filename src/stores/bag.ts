@@ -9,11 +9,11 @@ export const useBagStore = defineStore('bag', {
   getters: {
     totalPrice: (state) => {
       return state.products
-        .map((e) => e.price * e.quantity)
+        .map((e) => Number(e.price) * Number(e.quantity))
         .reduce((a, b) => a + b, 0);
     },
     totalQuantity: (state) => {
-      return state.products.map((e) => e.quantity).reduce((a, b) => a + b, 0);
+      return state.products.map((e) => e.quantity).reduce((a, b) => Number(a) + Number(b), 0);
     },
   },
   actions: {
@@ -35,7 +35,7 @@ export const useBagStore = defineStore('bag', {
         throw error;
       }
     },
-    async removeProduct(userId, productId, quantity) {
+    async removeProduct(userId: string, productId: string, quantity: Number) {
       try {
         const { data } = await removeCart({ userId, productId, quantity });
         this.products = data.products;

@@ -1,10 +1,10 @@
+import SignUp from '../views/SignUp.vue';
 import { createRouter, createWebHashHistory } from 'vue-router';
 import Home from '../views/Home.vue';
 import New from '../views/New.vue';
 import Sale from '../views/Sale.vue';
 import Product from '../views/Product.vue';
 import SignIn from '../views/SignIn.vue';
-import SignUp from '../views/SignUp.vue';
 import Checkout from '../views/Checkout.vue';
 import Bag from '../views/Bag.vue'
 import { useAppStore } from '../stores/app';

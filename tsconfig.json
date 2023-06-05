@@ -15,6 +15,7 @@
     "allowSyntheticDefaultImports": true,
     "noEmitOnError": false,
     "noEmit": true,
+    "allowJs": true,
   },
   "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue", "src/main.ts", "src/main.ts", "src/main.ts"],
   "references": [{
