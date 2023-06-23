@@ -17,6 +17,6 @@ COPY . .
 
 # build app for production with minification
 RUN npm run build
-
+ENV VITE_API_URL http://localhost:8989
 EXPOSE 3000
-CMD [ "http-server", "dist" ]
+CMD [ "http-server", "dist","-p", "3000" ]

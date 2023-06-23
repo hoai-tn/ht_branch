@@ -1,14 +1,11 @@
-version: '3.3'
-
+version: '3'
 services:
-  nuxt:
+  vue-app:
     build:
       context: .
-    image: nuxt_dev
-    container_name: nuxt_dev
-    command: npm run dev
-    volumes:
-    - .:/app
-    - /app/node_modules
+      dockerfile: Dockerfile
     ports:
-      - "3000:3000"
+      - 3000:3000
+    volumes:
+      - .:/app
+    command: npm run dev
