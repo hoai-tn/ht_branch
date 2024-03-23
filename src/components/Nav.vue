@@ -8,7 +8,7 @@ import { storeToRefs } from 'pinia';
 const store = useAppStore();
 const bagStore = useBagStore();
 const authStore = useAuthStore();
-const { isAuthenticated } = storeToRefs(authStore)
+const { isAuthenticated } = storeToRefs(authStore);
 const isShowDropAvatar = ref(false);
 const numberOfProducts = computed(() => bagStore.products.length);
 </script>
@@ -34,9 +34,6 @@ const numberOfProducts = computed(() => bagStore.products.length);
             </li>
             <li class="px-4"><a class="hover:underline" href="">Women</a></li>
             <li class="px-4"><a class="hover:underline" href="">Men</a></li>
-            <li class="px-4">
-              <a class="hover:underline" href="">Designers</a>
-            </li>
             <li class="px-4">
               <router-link to="/sale" class="hover:underline">Sale</router-link>
             </li>
